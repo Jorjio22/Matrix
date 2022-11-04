@@ -1,0 +1,87 @@
+class Matrix:
+    def __init__(self, matrix: list) -> list:
+        self.matrix = matrix
+
+    def get_diagonal(self) -> list:
+        diagonal = []
+        count = 0
+        x = len(self.matrix)
+        y = len(self.matrix[0])
+        if self.matrix == []:
+            return []
+        if x == y:
+            while count < x:
+                diagonal.append(self.matrix[count][count])
+                count += 1
+        else:
+            while count < x:
+                if count == 2:
+                    diagonal.append(self.matrix[1][count])
+                    diagonal.append(self.matrix[2][count + 1])
+                else:
+                    diagonal.append(self.matrix[count][count])
+                count += 1
+        return diagonal
+
+    def get_counter_diagonal(self) -> list:
+        diagonal = []
+        d = []
+        count = 0
+        x = len(self.matrix)
+        y = len(self.matrix[0])
+        if self.matrix == []:
+            return []
+        for i in self.matrix:
+            d.append(i[-1::-1])
+        if x == y:
+            while count < x:
+                diagonal.append(d[count][count])
+                count += 1
+        else:
+            while count < x:
+                if count == 2:
+                    diagonal.append(d[1][count])
+                    diagonal.append(d[2][count + 1])
+                else:
+                    diagonal.append(d[count][count])
+                count += 1
+        return diagonal
+
+    def rotate_rows(self, number: int) -> list:
+        copy_matrix = self.matrix[::]
+        x = len(self.matrix)
+        if self.matrix == []:
+            return []
+        for _ in range(number):
+            for i in range(x):
+                copy_matrix[i] = self.matrix[i - 1]
+            self.matrix = copy_matrix[::]
+        return self.matrix
+
+    def rotate_columns(self, number: int) -> list:
+        d = [[], [], []]
+        w = [[], [], [], []]
+        x = len(self.matrix)
+        y = len(self.matrix[0])
+        if self.matrix == []:
+            return []
+        if x == 3 and y == 3:
+            for _ in range(number):
+                d[0] = [self.matrix[0][2], self.matrix[0][0], self.matrix[0][1]]
+                d[1] = [self.matrix[1][2], self.matrix[1][0], self.matrix[1][1]]
+                d[2] = [self.matrix[2][2], self.matrix[2][0], self.matrix[2][1]]
+                self.matrix = d[::]
+        if x == 3 and y == 4:
+            for _ in range(number):
+                d[0] = [self.matrix[0][3], self.matrix[0][0], self.matrix[0][1], self.matrix[0][2]]
+                d[1] = [self.matrix[1][3], self.matrix[1][0], self.matrix[1][1], self.matrix[1][2]]
+                d[2] = [self.matrix[2][3], self.matrix[2][0], self.matrix[2][1], self.matrix[2][2]]
+                self.matrix = d[::]
+        if x == 4:
+            for _ in range(number):
+                w[0] = [self.matrix[0][3], self.matrix[0][0], self.matrix[0][1], self.matrix[0][2]]
+                w[1] = [self.matrix[1][3], self.matrix[1][0], self.matrix[1][1], self.matrix[1][2]]
+                w[2] = [self.matrix[2][3], self.matrix[2][0], self.matrix[2][1], self.matrix[2][2]]
+                w[3] = [self.matrix[3][3], self.matrix[3][0], self.matrix[3][1], self.matrix[3][2]]
+                self.matrix = w[::]
+        return self.matrix
